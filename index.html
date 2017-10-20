@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>moveTest</title>
+    <script defer type="text/javscript" src="index.js"></script>
+  </head>
+  <body>
+
+
+<svg width="120" height="120" viewBox="0 0 180 180"
+    xmlns="http://www.w3.org/2000/svg" version="1.1"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+
+
+  <path d="
+        M 100, 100
+        m -75, 0
+        a 75,75 0 1,0 150,0
+        a 75,75 0 1,0 -150,0
+        "
+      stroke="lightgrey" stroke-width="2"
+      fill="none" id="theMotionPath"/>
+  <circle cx="180" cy="110" r="3" fill="lightgrey"  />
+
+
+  <!-- Red circle which will be moved along the motion path. -->
+  <circle cx="" cy="" r="5" fill="red">
+
+    <!-- Define the motion path animation -->
+    <animateMotion dur="6s" repeatCount="indefinite">
+      <mpath xlink:href="#theMotionPath"/>
+    </animateMotion>
+  </circle>
+</svg>
+
+  </body>
+</html>
