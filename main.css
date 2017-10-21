@@ -1,0 +1,7 @@
+hr{clear: both;}
+form{display: block;}
+//form label{width: 300px; float: left; clear: both;}
+/* form input{float: right;} */
+.aarde{width: 300px; height: 300px; border-radius: 150px; background: url('https://tijnvanwinden.nl/img/aarde.png');}
+#zon{width: 40px; height: 40px; background: yellow; border: 2px solid yellow; border-radius: 20px; position: relative; margin-left: -20px; top: 120px;}
+#maan{width: 30px; height: 30px; background: yellow; border: 2px solid yellow; border-radius: 16px; position: relative; margin-left: -15px; top: 115px;}
