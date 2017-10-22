@@ -29,9 +29,9 @@ function init() {
   context.clearRect(0, 0, context.width, context.height);
   context.fillStyle = "lightblue";
 
-  drawPolys();
+  // drawPolys();
   gongLine();
-  // window.requestAnimationFrame(drawPolys);
+  window.requestAnimationFrame(drawPolys);
 };
 
 function gongLine(){
@@ -119,23 +119,39 @@ function drawPolys() {
 
   // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
   // this will figure out how often to bang a gong
-  let gongRate = Math.floor(2511 / mallets.length)
+  // this needs to be modular for the number of gongs
+  let gongTime = Math.floor(rotationTable.length / 3)
+  // console.log(gongTime);
 
   // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
   // increment rotation and pull new frame
   rotation = -((rotationTable[i] * 0.01).toFixed(3));
-  if (i < rotationTable.length - (rotationIncrement +1)){
+
+  // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+  // the below is all a hack to get the gong to right for three mallets and will have to be re-worked
+  if ( i > gongTime - rotationIncrement && i < gongTime + rotationIncrement){
+    gong.triggerAttackRelease('C4', '8n')
+    console.log("gong gong big old bong")
+    i += rotationIncrement;
+  }
+  else if ( i > 2 * gongTime - rotationIncrement && i < 2 * gongTime + rotationIncrement){
+    gong.triggerAttackRelease('C4', '8n')
+    console.log("gong gong big old bong")
+    i += rotationIncrement;
+  }
+
+  else if (i < rotationTable.length - (rotationIncrement +1)){
     i += rotationIncrement;
   }
   else {
-    i = 0;
-    // trigger mallet strike
-    gong.triggerAttackRelease('C4', '8n')
-    console.log("gong gong big old bong")
-  }
+      i = 0;
+      // trigger mallet strike
+      gong.triggerAttackRelease('C4', '8n')
+      console.log("gong gong big old bong")
+    }
 
 
-  // window.requestAnimationFrame(drawPolys)
+  window.requestAnimationFrame(drawPolys)
 
 }
