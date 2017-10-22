@@ -1,5 +1,12 @@
-let rotation = 0;
+let rotation = 0.01;
+let rotationIncrement = 0.01;
 const gong = new Tone.Synth().toMaster()
+const speed = document.querySelector("#rotationSpeed")
+console.log(speed);
+// handler for speed (need for speed)
+speed.oninput = () => {
+  rotationIncrement = speed.value / 100;
+};
 
 function Mallet() {
   this.r = 20;
@@ -52,15 +59,14 @@ function drawPolys() {
   context.stroke();
   context.fill();
 
+  // increment rotation and pull new frame
+  rotation -= rotationIncrement;
+  window.requestAnimationFrame(drawPolys)
+  console.log(rotation);
   // determine mallet strike
   strike = Math.abs((rotation * 100).toFixed(0));
   if(strike > 0 && strike % 628 === 0){
     gong.triggerAttackRelease('C4', '8n')
-    console.log("DR. FUNKLESTEIN IN THE HOUSE")
+    console.log(strike)
   }
-
-
-  // increment rotation and pull new frame
-  rotation -= 0.01;
-  window.requestAnimationFrame(drawPolys)
 }
