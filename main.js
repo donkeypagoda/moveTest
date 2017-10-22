@@ -1,17 +1,16 @@
-let rotationTable = Array.from(new Array(624), (x, i) => i + 1);
-// console.log(rotationTable);
+let rotationTable = Array.from(new Array(2512), (x, i) => (i * 0.25) + 0.25);
 let rotation = 0.01;
 let i = 0;
 let rotationIncrement = 1;
 
+//make a stupid pseudo-gong
 const gong = new Tone.Synth().toMaster()
 const speed = document.querySelector("#rotationSpeed")
 
-console.log(speed.value);
+
 // handler for speed (need for speed)
 speed.oninput = () => {
   rotationIncrement = parseInt(speed.value);
-  console.log(parseInt(speed.value));
 };
 
 function Mallet() {
@@ -28,9 +27,9 @@ function init() {
   context.clearRect(0, 0, context.width, context.height);
   context.fillStyle = "lightblue";
 
-  drawPolys();
+  // drawPolys();
   gongLine();
-  // window.requestAnimationFrame(drawPolys);
+  window.requestAnimationFrame(drawPolys);
 };
 
 function gongLine(){
@@ -65,20 +64,20 @@ function drawPolys() {
   context.stroke();
   context.fill();
 
+
   // increment rotation and pull new frame
-  rotation = -((rotationTable[i] * 0.001).toFixed(3));
-  if (i < rotationTable.length - 2){
+  rotation = -((rotationTable[i] * 0.01).toFixed(3));
+  if (i < rotationTable.length - (rotationIncrement +1)){
     i += rotationIncrement;
   }
   else {
     i = 0;
-  }
-  // window.requestAnimationFrame(drawPolys)
-  console.log(rotation);
-  // determine mallet strike
-
-  if(rotation === 0.624){
+    // trigger mallet strike
     gong.triggerAttackRelease('C4', '8n')
-    console.log(strike)
+    console.log("gong gong big old bong")
   }
+
+
+  window.requestAnimationFrame(drawPolys)
+
 }
