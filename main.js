@@ -18,8 +18,8 @@ function init() {
   for (i = 0; i < num; i++) {
     balls[i] = new Ball();
   }
-  draw()
-  // requestAnimationFrame(draw);
+  // draw()
+  requestAnimationFrame(draw);
 };
 
 function draw() {
@@ -56,5 +56,5 @@ function draw() {
 
   // update rotation value and request new frame
   rotation -= 0.01;
-  // requestAnimationFrame(draw)
+  requestAnimationFrame(draw)
 }
