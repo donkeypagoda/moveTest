@@ -18,8 +18,8 @@ function init() {
   for (i = 0; i < num; i++) {
     balls[i] = new Ball();
   }
-  draw()
-  // requestAnimationFrame(draw);
+  // draw()
+  requestAnimationFrame(draw);
 };
 
 function draw() {
@@ -30,6 +30,10 @@ function draw() {
   context.translate(300, 300);
   context.rotate(rotation);
 
+  context.beginPath();
+  context.arc(0, 0, 240, 0, Math.PI * 2, false);
+  context.lineWidth = 1;
+  context.stroke();
   // draw arcs
   // for (i = 0; i < num; i++) {
   //   var Ball = balls[i];
@@ -45,18 +49,16 @@ function draw() {
   context.arc(ball.x, ball.y, ball.r, 0, 2 * Math.PI, false);
   context.stroke();
   context.fill();
-
-  context.beginPath();
-  context.arc(0, 0, 240, 0, Math.PI * 2, false);
   // console.log(ball.x);
-  // if()
-  console.log(rotation.toFixed(2) * 100)
-  console.log(36000 * (Math.PI / 180));
-  context.lineWidth = 8;
-  context.stroke();
+  bong = Math.abs((rotation * 100).toFixed(0))
+  // console.log(bong);
+  if(bong > 0 && bong % 628 === 0){
+
+    console.log("DR. FUNKLESTEIN IN THE HOUSE")
+  }
 
 
   // update rotation value and request new frame
-  rotation -= 0.0001;
-  // requestAnimationFrame(draw)
+  rotation -= 0.01;
+  requestAnimationFrame(draw)
 }
