@@ -1,64 +1,66 @@
-var num = 5,
-    rotation = 0,
-    balls = [];
+let rotation = 0;
+const gong = new Tone.Synth().toMaster()
 
-function Ball() {
+function Mallet() {
   this.r = 20;
-  this.x = Math.random() * 200;
-  this.y = Math.random() * 150;
-}
+  this.x = 240
+  this.y = 0;
+};
+
+const mallets = [];
 
 function init() {
   canvas = document.getElementById("testCanvas");
   context = canvas.getContext("2d");
-
   context.clearRect(0, 0, context.width, context.height);
   context.fillStyle = "lightblue";
 
-  for (i = 0; i < num; i++) {
-    balls[i] = new Ball();
-  }
   // draw()
-  requestAnimationFrame(draw);
+  gongLine();
+  window.requestAnimationFrame(drawPolys);
 };
 
-function draw() {
-  // reset transforms before clearing
+function gongLine(){
+  context.beginPath();
+  context.moveTo(500, 0);
+  context.lineTo(200, 0);
+  context.lineWidth = 1;
+  context.stroke();
+}
+
+function drawPolys() {
+  // reset transforms before clearing, I don't get this, I stole it from MDN and it works
   context.setTransform(1, 0, 0, 1, 0, 0);
   context.clearRect(0, 0, canvas.width, canvas.height);
-  // translate and rotate an absolute rotation value
+  // translate - this moves the canvas around to the center
   context.translate(300, 300);
+  // draw gongLine BEFORE rotation
+  gongLine();
   context.rotate(rotation);
 
+  // circle path, this will have to be re-worked for other shapes, obvs
   context.beginPath();
   context.arc(0, 0, 240, 0, Math.PI * 2, false);
   context.lineWidth = 1;
   context.stroke();
-  // draw arcs
-  // for (i = 0; i < num; i++) {
-  //   var Ball = balls[i];
-  //   context.beginPath();
-  //   context.arc(Ball.x, Ball.y, Ball.r, 0, 2 * Math.PI, false);
-  //   context.stroke();
-  //   context.fill();
-  // }
-  let ball = new Ball();
-  ball.x = 240
-  ball.y = 0
+
+  let mallet1 = new Mallet();
+
+  // draw the mallet
   context.beginPath();
-  context.arc(ball.x, ball.y, ball.r, 0, 2 * Math.PI, false);
+  context.arc(mallet1.x, mallet1.y, mallet1.r, 0, 2 * Math.PI, false);
   context.stroke();
   context.fill();
-  // console.log(ball.x);
-  bong = Math.abs((rotation * 100).toFixed(0))
-  // console.log(bong);
-  if(bong > 0 && bong % 628 === 0){
 
+  // determine mallet strike
+  strike = Math.abs((rotation * 100).toFixed(0));
+  if(strike > 0 && strike % 628 === 0){
+    gong.triggerAttackRelease('C4', '8n')
     console.log("DR. FUNKLESTEIN IN THE HOUSE")
   }
 
 
-  // update rotation value and request new frame
+  // increment rotation and pull new frame
   rotation -= 0.01;
-  requestAnimationFrame(draw)
+  window.requestAnimationFrame(drawPolys)
 }
