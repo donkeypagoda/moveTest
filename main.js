@@ -1,11 +1,17 @@
+let rotationTable = Array.from(new Array(624), (x, i) => i + 1);
+// console.log(rotationTable);
 let rotation = 0.01;
-let rotationIncrement = 0.01;
+let i = 0;
+let rotationIncrement = 1;
+
 const gong = new Tone.Synth().toMaster()
 const speed = document.querySelector("#rotationSpeed")
-console.log(speed);
+
+console.log(speed.value);
 // handler for speed (need for speed)
 speed.oninput = () => {
-  rotationIncrement = speed.value / 100;
+  rotationIncrement = parseInt(speed.value);
+  console.log(parseInt(speed.value));
 };
 
 function Mallet() {
@@ -22,9 +28,9 @@ function init() {
   context.clearRect(0, 0, context.width, context.height);
   context.fillStyle = "lightblue";
 
-  // draw()
+  drawPolys();
   gongLine();
-  window.requestAnimationFrame(drawPolys);
+  // window.requestAnimationFrame(drawPolys);
 };
 
 function gongLine(){
@@ -41,7 +47,7 @@ function drawPolys() {
   context.clearRect(0, 0, canvas.width, canvas.height);
   // translate - this moves the canvas around to the center
   context.translate(300, 300);
-  // draw gongLine BEFORE rotation
+  // draw gongLine BEFORE rotation but AFTER setTransform
   gongLine();
   context.rotate(rotation);
 
@@ -60,12 +66,18 @@ function drawPolys() {
   context.fill();
 
   // increment rotation and pull new frame
-  rotation -= rotationIncrement;
-  window.requestAnimationFrame(drawPolys)
+  rotation = -((rotationTable[i] * 0.001).toFixed(3));
+  if (i < rotationTable.length - 2){
+    i += rotationIncrement;
+  }
+  else {
+    i = 0;
+  }
+  // window.requestAnimationFrame(drawPolys)
   console.log(rotation);
   // determine mallet strike
-  strike = Math.abs((rotation * 100).toFixed(0));
-  if(strike > 0 && strike % 628 === 0){
+
+  if(rotation === 0.624){
     gong.triggerAttackRelease('C4', '8n')
     console.log(strike)
   }
