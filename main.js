@@ -62,10 +62,6 @@ function drawPolys() {
   // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
   // adding a second mallet, need to breakout architecture soon
 
-  // let mallet2 = new Mallet();
-  // mallet2.x = -240;
-  // mallet2.y = 0;
-
   // adding two new mallets for triangle, the above should be used for the single point
   let mallet2 = new Mallet();
   mallet2.x = -125;
